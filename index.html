@@ -114,7 +114,18 @@
       transform: scale(1.02);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
+    .header-panel {
+  background-color: #f9f9f9;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
 
+.header-panel h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 2em;
+}
     #bmc-container {
       position: fixed;
       bottom: 20px;
@@ -125,7 +136,8 @@
 </head>
 
 <body>
-  <h1>G Clef Notes Practice</h1>
+  <div class="header-panel">
+    <h1>G Clef Notes Practice</h1>
 
   <div class="button-container">
     <button id="sortBtn">Sort</button>
@@ -135,6 +147,7 @@
       <label for="audioToggle">Audio</label>
     </div>
   </div>
+</div>
 
   <div class="selected-note">
     <div class="selected-note-display" id="selected-note-display"></div>
