@@ -17,14 +17,17 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      gap: 10px;
       margin: 20px auto;
-      max-width: 800px;
+      max-width: 840px;
     }
 
     .note-item {
-      width: 100px;
+      flex: 1 0 100px;
+      max-width: 100px;
+      /* width: 100px;
       height: 100px;
-      margin: 10px;
+      margin: 10px; */
       background-color: #f0f0f0;
       display: flex;
       align-items: center;
@@ -166,22 +169,31 @@
   <script>
     // Note definitions
     const notes = [
-      { abc: 'C2', name: 'do', value: 'C', frequency: 261.63 },
-      { abc: 'D2', name: 're', value: 'D', frequency: 293.66 },
-      { abc: 'E2', name: 'mi', value: 'E', frequency: 329.63 },
-      { abc: 'F2', name: 'fa', value: 'F', frequency: 349.23 },
-      { abc: 'G2', name: 'sol', value: 'G', frequency: 392.00 },
-      { abc: 'A2', name: 'la', value: 'A', frequency: 440.00 },
-      { abc: 'B2', name: 'si', value: 'B', frequency: 493.88 },
-      { abc: 'C\'2', name: 'do', value: 'C\'', frequency: 523.25 },
-      { abc: 'D\'2', name: 're', value: 'D\'', frequency: 587.33 },
-      { abc: 'E\'2', name: 'mi', value: 'E\'', frequency: 659.25 },
-      { abc: 'F\'2', name: 'fa', value: 'F\'', frequency: 698.46 },
-      { abc: 'G\'2', name: 'sol', value: 'G\'', frequency: 783.99 },
-      { abc: 'A\'2', name: 'la', value: 'A\'', frequency: 880.00 },
-      { abc: 'B\'2', name: 'si', value: 'B\'', frequency: 987.77 },
-      { abc: 'C\'\'2', name: 'do', value: 'C\'\'', frequency: 1046.50 }
-    ];
+  { abc: 'C2', name: 'do', value: 'C', frequency: 261.63 },
+  { abc: 'D2', name: 're', value: 'D', frequency: 293.66 },
+  { abc: 'E2', name: 'mi', value: 'E', frequency: 329.63 },
+  { abc: 'F2', name: 'fa', value: 'F', frequency: 349.23 },
+  { abc: 'G2', name: 'sol', value: 'G', frequency: 392.00 },
+  { abc: 'A2', name: 'la', value: 'A', frequency: 440.00 },
+  { abc: 'B2', name: 'si', value: 'B', frequency: 493.88 },
+
+  { abc: 'C\'2', name: 'do', value: 'C\'', frequency: 523.25 },
+  { abc: 'D\'2', name: 're', value: 'D\'', frequency: 587.33 },
+  { abc: 'E\'2', name: 'mi', value: 'E\'', frequency: 659.25 },
+  { abc: 'F\'2', name: 'fa', value: 'F\'', frequency: 698.46 },
+  { abc: 'G\'2', name: 'sol', value: 'G\'', frequency: 783.99 },
+  { abc: 'A\'2', name: 'la', value: 'A\'', frequency: 880.00 },
+  { abc: 'B\'2', name: 'si', value: 'B\'', frequency: 987.77 },
+
+  { abc: 'C\'\'2', name: 'do', value: 'C\'\'', frequency: 1046.50 },
+  { abc: 'D\'\'2', name: 're', value: 'D\'\'', frequency: 1174.66 },
+  { abc: 'E\'\'2', name: 'mi', value: 'E\'\'', frequency: 1318.51 },
+  { abc: 'F\'\'2', name: 'fa', value: 'F\'\'', frequency: 1396.91 },
+  { abc: 'G\'\'2', name: 'sol', value: 'G\'\'', frequency: 1567.98 },
+  { abc: 'A\'\'2', name: 'la', value: 'A\'\'', frequency: 1760.00 },
+  { abc: 'B\'\'2', name: 'si', value: 'B\'\'', frequency: 1975.53 },
+
+];
 
     let currentNotes = [...notes];
 
