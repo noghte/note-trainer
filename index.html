@@ -30,6 +30,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .note-notation {
@@ -86,7 +87,7 @@
 
     .selected-note-name {
       font-size: 2em;
-      margin-top: 10px;
+      margin-top: -1.5em;
     }
 
     h1 {
@@ -106,6 +107,12 @@
       justify-content: center;
       align-items: center;
       box-shadow: 2px 2px 3px #999;
+    }
+
+    .note-item.selected {
+      background-color: #FFDD00;
+      transform: scale(1.02);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
     #bmc-container {
@@ -213,8 +220,18 @@
 
     // Select a note to display
     function selectNote(note) {
+      // Remove previous selection
+      document.querySelectorAll('.note-item').forEach(el => el.classList.remove('selected'));
+
+      // Find and highlight the clicked note
+      const index = currentNotes.indexOf(note);
+      const noteItems = document.querySelectorAll('.note-item');
+      if (noteItems[index]) {
+        noteItems[index].classList.add('selected');
+      }
+
       // Render the selected note
-      ABCJS.renderAbc('selected-note-display', note.abc, { scale: 2.0 });
+      ABCJS.renderAbc('selected-note-display', note.abc, { scale: 2.5 });
       document.getElementById('selected-note-name').textContent = note.name;
 
       // Play the note if audio is enabled
