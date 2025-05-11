@@ -1,0 +1,168 @@
+@font-face {
+  font-family: "major";
+  src: url("../fonts/major.ttf");
+  font-display: swap;
+}
+*  {
+  font-family: "major";
+}
+.home {
+  display: inline;
+  text-align: center;
+}
+.home > .menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  .home > .menu {
+    max-width: 80%;
+  }
+  .home > .menu > div {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.home > .menu > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.home > .menu > div > div {
+  background-color: lightgray;
+  width: 100px;
+  margin: 10px;
+}
+.home > .float {
+  position:fixed;
+	width:60px;
+	height:60px;
+	bottom:10px;
+	right:10px;
+	background-color:lightgray;
+	color:#FFF;
+	border-radius:50%;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+.home > .float > div > img {
+  padding: 1.2em;
+  width: 1.5em;
+  height: 1.5em;
+}
+.challenge {
+  display: none;
+}
+.top {
+  position: absolute;
+  display: flex;
+}
+.top > div {
+  border: 1px black dotted;
+  width: 20px;
+  text-align: right;
+  margin: 2px;
+  padding: 2px;
+}
+.uno {
+  color: red;
+}
+.dos {
+  color: orange;
+}
+.tres {
+  color: green;
+}
+.cuatro {
+ color: blue;
+}
+.cinco {
+  color: mediumPurple;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  .container {
+    max-width: 80%;
+  }
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding-bottom: 2px;
+  width: 100%;
+  font-size: 0.8em;
+  text-align: center;
+}
+.timer {
+  position: absolute;
+  width: 85%;
+  text-align: right;
+  font-family: "major";
+  font-size: 2em;
+  font-weight: bold;
+  color: red;
+}
+.main {
+  font-family: "major";
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  font-size: 2em;
+}
+.question {
+  padding-top: 30px;
+  width: 50%;
+}
+.question-right {
+  font-weight: bold;
+  width: 40%;
+  text-align: left;
+}
+.question-right > #wrong {
+  text-decoration: line-through;
+}
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.notes > div {
+  display: flex;
+  align-items: center;
+  width: 26%;
+  height: 50px;
+  margin: 10px;
+  background-color: lightgray;
+}
+.notes > div > div {
+  font-size: 2em;
+  text-align: center;
+  width: 100%;
+}
+.notes img {
+    width: 0.8em;
+    height: 0.8em;
+}
+#start {
+    display: none;
+}
+#stop {
+    display: inline;
+}
+
+.abcjs-note_selected {
+  fill: black;
+}

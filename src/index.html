@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="theme-color" content="black"/>
+  <title>Practice Music Notes</title>
+  <meta name="description" content="Practice music notes"/>
+  <link rel="icon" href="./public/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="./public/assets/icon/apple-icon-180x180.png">
+  <link rel="preload" href="./public/assets/fonts/major.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./public/assets/css/styles.css" />
+  <style>
+    .note-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .note-item {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .note-notation {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px;
+    }
+    .button-container button {
+      font-family: "major";
+      padding: 10px 20px;
+      margin: 0 10px;
+      background-color: #f0f0f0;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    .audio-option {
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+      font-family: "major";
+      font-size: 1.2em;
+    }
+    .audio-option input[type="checkbox"] {
+      margin-right: 5px;
+      width: 18px;
+      height: 18px;
+    }
+    .selected-note {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+    .selected-note-display {
+      width: 200px;
+      height: 150px;
+      margin: 10px auto;
+    }
+    .selected-note-name {
+      font-size: 2em;
+      margin-top: 10px;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .home-link {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #f0f0f0;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 2px 2px 3px #999;
+    }
+  </style>
+</head>
+<body>
+  <h1>G Clef Notes Practice</h1>
+  
+  <div class="button-container">
+    <button id="sortBtn">Sort</button>
+    <button id="shuffleBtn">Shuffle</button>
+    <div class="audio-option">
+      <input type="checkbox" id="audioToggle" checked>
+      <label for="audioToggle">Audio</label>
+    </div>
+  </div>
+
+  <div class="selected-note">
+    <div class="selected-note-display" id="selected-note-display"></div>
+    <div class="selected-note-name" id="selected-note-name"></div>
+  </div>
+  
+  <div class="note-list" id="note-list">
+    <!-- Notes will be populated by JavaScript -->
+  </div>
+
+  <a href="./public/index.html" class="home-link">
+    <img src="./public/assets/icon/home.svg" width="24" height="24" alt="home" />
+  </a>
+
+  <script src="./public/assets/js/abcjs-basic-min.js"></script>
+  <script>
+    // Note definitions
+    const notes = [
+      { abc: 'C2', name: 'do', value: 'C', frequency: 261.63 },
+      { abc: 'D2', name: 're', value: 'D', frequency: 293.66 },
+      { abc: 'E2', name: 'mi', value: 'E', frequency: 329.63 },
+      { abc: 'F2', name: 'fa', value: 'F', frequency: 349.23 },
+      { abc: 'G2', name: 'sol', value: 'G', frequency: 392.00 },
+      { abc: 'A2', name: 'la', value: 'A', frequency: 440.00 },
+      { abc: 'B2', name: 'si', value: 'B', frequency: 493.88 },
+      { abc: 'C\'2', name: 'do', value: 'C\'', frequency: 523.25 },
+      { abc: 'D\'2', name: 're', value: 'D\'', frequency: 587.33 },
+      { abc: 'E\'2', name: 'mi', value: 'E\'', frequency: 659.25 },
+      { abc: 'F\'2', name: 'fa', value: 'F\'', frequency: 698.46 },
+      { abc: 'G\'2', name: 'sol', value: 'G\'', frequency: 783.99 },
+      { abc: 'A\'2', name: 'la', value: 'A\'', frequency: 880.00 },
+      { abc: 'B\'2', name: 'si', value: 'B\'', frequency: 987.77 },
+      { abc: 'C\'\'2', name: 'do', value: 'C\'\'', frequency: 1046.50 }
+    ];
+
+    let currentNotes = [...notes];
+
+    // Create note elements
+    function renderNotes() {
+      const noteList = document.getElementById('note-list');
+      noteList.innerHTML = '';
+      
+      currentNotes.forEach(note => {
+        const noteItem = document.createElement('div');
+        noteItem.className = 'note-item';
+        
+        const noteNotation = document.createElement('div');
+        noteNotation.className = 'note-notation';
+        noteNotation.id = `notation-${note.value.replace(/'/g, '-prime')}`;
+        
+        noteItem.appendChild(noteNotation);
+        
+        noteItem.addEventListener('click', () => selectNote(note));
+        
+        noteList.appendChild(noteItem);
+        
+        // Render the ABC notation
+        ABCJS.renderAbc(`notation-${note.value.replace(/'/g, '-prime')}`, note.abc);
+      });
+    }
+
+    // Play a note using Web Audio API
+    function playNote(frequency, duration = 0.8) {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.value = frequency;
+      
+      // Apply ADSR envelope for a more musical sound
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.8, audioContext.currentTime + 0.05);
+      gainNode.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.2);
+      gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration);
+    }
+    
+    // Select a note to display
+    function selectNote(note) {
+      // Render the selected note
+      ABCJS.renderAbc('selected-note-display', note.abc, { scale: 2.0 });
+      document.getElementById('selected-note-name').textContent = note.name;
+      
+      // Play the note if audio is enabled
+      if (document.getElementById('audioToggle').checked) {
+        playNote(note.frequency);
+      }
+    }
+
+    // Sort notes
+    function sortNotes() {
+      currentNotes.sort((a, b) => {
+        return notes.findIndex(n => n.value === a.value) - 
+               notes.findIndex(n => n.value === b.value);
+      });
+      renderNotes();
+    }
+
+    // Shuffle notes
+    function shuffleNotes() {
+      for (let i = currentNotes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [currentNotes[i], currentNotes[j]] = [currentNotes[j], currentNotes[i]];
+      }
+      renderNotes();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderNotes();
+      
+      // Select first note by default
+      selectNote(currentNotes[0]);
+      
+      // Add button event listeners
+      document.getElementById('sortBtn').addEventListener('click', sortNotes);
+      document.getElementById('shuffleBtn').addEventListener('click', shuffleNotes);
+    });
+  </script>
+</body>
+</html>
