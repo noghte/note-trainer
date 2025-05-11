@@ -1,5 +1,9 @@
 # Note Trainer 🎵
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/8d8e9cb8-ff41-42f9-b234-34716a608d0c/deploy-status)](https://app.netlify.com/sites/note-trainer/deploys)
+
+🔗 **Live Demo**: [https://note-trainer.netlify.app](https://note-trainer.netlify.app)
+
 **Note Trainer** is a fun and interactive web application for learning and practicing **music notes** on the **G clef (treble clef)**. Whether you're a beginner or an experienced musician, this tool helps you improve **note reading**, **sight-reading**, and **aural recognition** skills through **visual cues** and **audio feedback**.
 
 ## 🎯 Features
