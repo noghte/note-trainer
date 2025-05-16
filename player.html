@@ -19,7 +19,7 @@
 
     .notation-display {
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 5px; /* Reduced from 20px */
     }
 
     .stop-button {
@@ -28,6 +28,33 @@
 
     .stop-button:hover {
       background-color: #ff7777 !important;
+    }
+    
+    .controls-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .buttons {
+      display: flex;
+    }
+    
+    .options {
+      display: flex;
+      align-items: center;
+    }
+    
+    .options input[type="checkbox"] {
+      margin-right: 5px;
+      width: 18px;
+      height: 18px;
+    }
+    
+    .options label {
+      font-family: "major";
+      font-size: 1.1em;
     }
   </style>
 </head>
@@ -53,9 +80,15 @@
   <div class="note-input-container">
     <p>Enter comma-separated notes (do, re, mi, fa, sol, la, si) to play them in sequence:</p>
     <textarea class="note-input" id="note-input" rows="4" placeholder="Example: do, re, mi, do, fa, sol"></textarea>
-    <div>
-      <button class="play-button" id="play-btn">Play</button>
-      <button class="play-button" id="clear-btn">Clear</button>
+    <div class="controls-container">
+      <div class="buttons">
+        <button class="play-button" id="play-btn">Play</button>
+        <button class="play-button" id="clear-btn">Clear</button>
+      </div>
+      <div class="options">
+        <input type="checkbox" id="showLabels" checked>
+        <label for="showLabels">Show Note Labels</label>
+      </div>
     </div>
     <div class="notation-container" id="notation-container">
       <!-- Notation displays will be added here dynamically -->
@@ -139,16 +172,21 @@
     }
 
     // Create notation for a chunk of notes
-    function createNotationForChunk(noteChunk, chunkIndex) {
+    function createNotationForChunk(noteChunk, chunkIndex, showLabels = true) {
       // Simpler notation format to avoid duplicate notes
       let abcNotation = `X:${chunkIndex + 1}\nL:1/4\nK:C\n`;
       
       for (let i = 0; i < noteChunk.length; i++) {
         const note = noteChunk[i];
         if (noteMap[note]) {
-          // Add note name above the note and unique ID
-          const noteName = note.charAt(0).toUpperCase() + note.slice(1); // Capitalize the note name
-          abcNotation += `"^${noteName}"${noteMap[note].abc} `;
+          if (showLabels) {
+            // Add note name above the note
+            const noteName = note.charAt(0).toUpperCase() + note.slice(1); // Capitalize the note name
+            abcNotation += `"^${noteName}"${noteMap[note].abc} `;
+          } else {
+            // Just add the note without a label
+            abcNotation += `${noteMap[note].abc} `;
+          }
         }
       }
       return abcNotation;
@@ -158,6 +196,9 @@
     function renderNotation(notesArray) {
       const notationContainer = document.getElementById('notation-container');
       notationContainer.innerHTML = '';
+      
+      // Get show labels preference
+      const showLabels = document.getElementById('showLabels').checked;
       
       // Filter out only valid notes
       const validNotes = notesArray.filter(note => noteMap[note]);
@@ -175,7 +216,8 @@
         displayDiv.id = `notation-display-${i}`;
         notationContainer.appendChild(displayDiv);
         
-        const abcNotation = createNotationForChunk(noteChunks[i], i);
+        // Pass the showLabels preference to the notation creation function
+        const abcNotation = createNotationForChunk(noteChunks[i], i, showLabels);
         
         // Simplified rendering with just the essential options
         ABCJS.renderAbc(displayDiv.id, abcNotation, { 
@@ -190,10 +232,10 @@
           }
         });
         
-        // Add a line break for visual clarity between staves
+        // Add minimal spacing between staves
         if (i < noteChunks.length - 1) {
           const spacer = document.createElement('div');
-          spacer.style.height = '20px';
+          spacer.style.height = '5px'; // Reduced to 5px for minimal spacing
           notationContainer.appendChild(spacer);
         }
       }
@@ -451,6 +493,18 @@
         document.getElementById('notation-container').innerHTML = '';
         if (isPlaying) {
           stopPlayer();
+        }
+      });
+      
+      // Show Note Labels toggle event
+      const labelsCheckbox = document.getElementById('showLabels');
+      labelsCheckbox.addEventListener('change', () => {
+        // Only redraw notation if there are notes displayed
+        const inputText = noteInput.value.trim();
+        if (inputText) {
+          const notes = inputText.split(',').map(note => note.trim().toLowerCase());
+          // Re-render notation with updated label setting
+          renderNotation(notes);
         }
       });
     });
