@@ -139,6 +139,19 @@
 </head>
 
 <body>
+  <!-- Hamburger Menu -->
+  <div class="hamburger-menu">
+    <button class="hamburger-icon" id="hamburger-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="menu-items">
+      <a href="index.html">Home</a>
+      <a href="player.html">Player</a>
+    </nav>
+  </div>
+
   <div class="header-panel">
     <h1>G Clef Notes Practice</h1>
 
@@ -160,10 +173,6 @@
   <div class="note-list" id="note-list">
     <!-- Notes will be populated by JavaScript -->
   </div>
-
-  <!-- <a href="./public/index.html" class="home-link">
-    <img src="./public/assets/icon/home.svg" width="24" height="24" alt="home" />
-  </a> -->
 
   <script src="./public/assets/js/abcjs-basic-min.js"></script>
   <script>
@@ -283,8 +292,16 @@
       renderNotes();
     }
 
-    // Initialize
+    // Toggle the hamburger menu
     document.addEventListener('DOMContentLoaded', () => {
+      const hamburgerToggle = document.getElementById('hamburger-toggle');
+      const body = document.body;
+
+      hamburgerToggle.addEventListener('click', () => {
+        body.classList.toggle('menu-open');
+      });
+
+      // Initialize notes
       renderNotes();
 
       // Select first note by default
