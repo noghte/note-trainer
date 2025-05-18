@@ -21,6 +21,14 @@
       margin: 20px auto;
       max-width: 840px;
     }
+    
+    .bmc-menu-link {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      padding: 10px 25px !important;
+    }
 
     .note-item {
       flex: 1 0 100px;
@@ -129,12 +137,6 @@
   text-align: center;
   font-size: 2em;
 }
-    #bmc-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
   </style>
 </head>
 
@@ -149,6 +151,9 @@
     <nav class="menu-items">
       <a href="index.html">Home</a>
       <a href="player.html">Player</a>
+      <a href="https://www.buymeacoffee.com/noghte" target="_blank" class="bmc-menu-link">
+        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px;width: 108px;">
+      </a>
     </nav>
   </div>
 
@@ -312,12 +317,6 @@
       document.getElementById('shuffleBtn').addEventListener('click', shuffleNotes);
     });
   </script>
-  <div id="bmc-container">
-    <a href="https://www.buymeacoffee.com/noghte" target="_blank">
-      <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
-        style="height: 30px;width: 108px;">
-    </a>
-  </div>
 </body>
 
 </html>
